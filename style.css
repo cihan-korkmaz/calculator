@@ -1,0 +1,16 @@
+button {
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+}
+
+.display {
+    display: flex;
+    width: 400px;
+    height: 100px;
+    font-size: 50px;
+    align-items: center;
+    justify-content: right;
+    border: solid;
+
+}
