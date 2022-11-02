@@ -1,5 +1,5 @@
 function add(a, b) {
-    return a+b;
+    return Number(a)+Number(b);
 };
 
 function subtract(a, b) {
@@ -26,5 +26,33 @@ function operate(operator, a, b) {
     }
 }
 
-const x = document.querySelector(".display")
-x.textContent("Hey")
+const display = document.querySelector(".display");
+const buttons = document.querySelectorAll("button");
+let inputA;
+let inputB;
+let inputOperator;
+buttons.forEach((button) => {
+    if (button.textContent === "Clear") {
+        button.addEventListener("click", () => display.textContent = "");
+    } else if (button.textContent === "+" || button.textContent === "-" || button.textContent === "*" || button.textContent === "/") {
+        button.addEventListener("click", opFunction)
+        function opFunction() {
+            inputA = display.textContent;
+            inputOperator = button.textContent;
+            display.textContent = ""
+        };
+    } else if (button.textContent === "=") {
+        button.addEventListener("click", calculateFunction);
+        function calculateFunction () {
+            let inputB = display.textContent;
+            display.textContent = operate(inputOperator, inputA, inputB);
+        }
+    } else {
+        button.addEventListener("click", addDisplay);
+        function addDisplay() {
+            display.textContent += button.textContent;
+    }
+
+};
+
+});
