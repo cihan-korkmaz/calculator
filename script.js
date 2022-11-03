@@ -1,16 +1,27 @@
 function add(a, b) {
-    return Number(a)+Number(b);
+    a = Number(a)
+    b = Number(b)
+    return a+b;
 };
 
 function subtract(a, b) {
+    a = Number(a)
+    b = Number(b)
     return a-b;
 }
 
 function multiply(a, b) {
+    a = Number(a)
+    b = Number(b)
     return a*b;
 }
 
 function divide(a, b) {
+    a = Number(a)
+    b = Number(b)
+    if (b === 0) {
+        alert("Divide by zero is forbidden");
+    }
     return a/b;
 }
 
@@ -31,26 +42,58 @@ const buttons = document.querySelectorAll("button");
 let inputA;
 let inputB;
 let inputOperator;
+let first = true;
+let opCheck = false;
 buttons.forEach((button) => {
     if (button.textContent === "Clear") {
-        button.addEventListener("click", () => display.textContent = "");
+        button.addEventListener("click", clearF)
+        function clearF() {
+            display.textContent = "";
+            inputA = null;
+            inputB = null;
+            inputOperator = null;
+            first = true;
+            opCheck = false;
+        }
     } else if (button.textContent === "+" || button.textContent === "-" || button.textContent === "*" || button.textContent === "/") {
         button.addEventListener("click", opFunction)
         function opFunction() {
-            inputA = display.textContent;
-            inputOperator = button.textContent;
-            display.textContent = ""
+            if (first) {
+                inputA = display.textContent;
+                inputOperator = button.textContent;
+                display.textContent = ""
+                first = false;
+                opCheck = true;
+            } else {
+                inputB = display.textContent;
+                display.textContent = operate(inputOperator, inputA, inputB);
+                inputA = display.textContent;
+                inputOperator = button.textContent;
+                display.textContent = inputA;
+                opCheck = true;
+                //first = true;
+            }
+
         };
     } else if (button.textContent === "=") {
         button.addEventListener("click", calculateFunction);
         function calculateFunction () {
-            let inputB = display.textContent;
+            inputB = display.textContent;
             display.textContent = operate(inputOperator, inputA, inputB);
+
         }
     } else {
         button.addEventListener("click", addDisplay);
         function addDisplay() {
-            display.textContent += button.textContent;
+            if (opCheck) {
+                display.textContent = ""
+                display.textContent += button.textContent;
+                opCheck = false;
+            } else {
+                display.textContent += button.textContent;
+            }
+
+            
     }
 
 };
